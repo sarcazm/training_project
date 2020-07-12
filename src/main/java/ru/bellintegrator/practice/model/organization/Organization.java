@@ -1,6 +1,7 @@
-package ru.bellintegrator.practice.model;
+package ru.bellintegrator.practice.model.organization;
 
 import lombok.Data;
+import ru.bellintegrator.practice.model.office.Office;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +15,11 @@ public class Organization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    /**
+     * Служебное поле hibernate
+     */
+    @Version
+    private Integer version;
     @Column(name = "name", nullable = false, length = 50)
     private String name;
     @Column(name = "full_name", nullable = false, length = 50)
@@ -33,7 +39,16 @@ public class Organization {
     private List<Office> offices = new ArrayList<>();
 
 
-
     public Organization() {
+    }
+
+    public Organization(String name, String fullName, String inn, String kpp, String address, String phone, Boolean isActive) {
+        this.name = name;
+        this.fullName = fullName;
+        this.inn = inn;
+        this.kpp = kpp;
+        this.address = address;
+        this.phone = phone;
+        this.isActive = isActive;
     }
 }

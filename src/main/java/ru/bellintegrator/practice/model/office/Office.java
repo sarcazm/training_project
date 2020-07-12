@@ -1,8 +1,12 @@
-package ru.bellintegrator.practice.model;
+package ru.bellintegrator.practice.model.office;
 
 import lombok.Data;
+import ru.bellintegrator.practice.model.organization.Organization;
+import ru.bellintegrator.practice.model.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -13,6 +17,12 @@ public class Office {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /**
+     * Служебное поле hibernate
+     */
+    @Version
+    private Integer version;
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
@@ -26,6 +36,9 @@ public class Office {
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "organization_id")
     private Organization organization;
+
+    @OneToMany(mappedBy = "office", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    List<User> users = new ArrayList<>();
 
     public Office() {
     }
